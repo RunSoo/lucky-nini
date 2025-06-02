@@ -6,31 +6,29 @@ import java.util.StringTokenizer;
 public class Main {
 	public static void main(String[] args) throws Exception, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine()); // 도시의 개수
+		int N = Integer.parseInt(br.readLine());
+
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int[] road = new int[N - 1]; // n번 ~ n+1번 도로 거리
-		for (int r = 0; r < N - 1; r++) {
-			road[r] = Integer.parseInt(st.nextToken());
+		int[] road = new int[N - 1];
+		for (int i = 0; i < N - 1; i++) {
+			road[i] = Integer.parseInt(st.nextToken());
 		}
 
 		st = new StringTokenizer(br.readLine());
-		int[] price = new int[N]; // n번 가격
-		int[] minPrice = new int[N];
-		for (int p = 0; p < N; p++) {
-			price[p] = Integer.parseInt(st.nextToken());
-			if (p == 0) {
-				minPrice[0] = price[0];
-			} else {
-				minPrice[p] = Math.min(minPrice[p - 1], price[p]);
+		int[] price = new int[N];
+		for (int i = 0; i < N; i++) {
+			price[i] = Integer.parseInt(st.nextToken());
+		}
+
+		long total = 0;
+		int min = price[0];
+		for (int i = 0; i < N - 1; i++) {
+			if (price[i] < min) {
+				min = price[i];
 			}
+			total += (long) min * road[i];
 		}
 
-		int totalPrice = 0;
-
-		for (int l = N - 2; l >= 0; l--) {
-			totalPrice += minPrice[l] * road[l];
-		}
-
-		System.out.println(totalPrice);
+		System.out.println(total);
 	}
 }
