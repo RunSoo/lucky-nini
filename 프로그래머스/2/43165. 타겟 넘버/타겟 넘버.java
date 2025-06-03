@@ -1,32 +1,18 @@
-import java.util.*;
 class Solution {
+    static int cnt = 0;
     public int solution(int[] numbers, int target) {
-        int answer = 0;
+        dfs(0, 0, numbers, target);
         
-        // 모든 방법의 수 => bfs
-        return bfs(numbers, target);
+        return cnt;
     }
     
-    public int bfs(int[] numbers, int target) {
-        Queue<Integer> queue = new LinkedList<>();
-        int depth = 0;
-        queue.add(0);
-        while (depth<numbers.length) {
-            int len = queue.size();
-            for (int i=0; i<len; i++) {
-                int top = queue.poll();
-                queue.add(top+numbers[depth]);
-                queue.add(top-numbers[depth]);
-            }
-            depth++;
+    public static void dfs(int idx, int sum, int[] numbers, int target) {
+        if (idx == numbers.length) {
+            if (sum == target) cnt++;
+            return;
         }
         
-        int cnt = 0;
-        while (!queue.isEmpty()) {
-            if (queue.poll()==target) {
-                cnt++;
-            }
-        }
-        return cnt;
+        dfs(idx + 1, sum + numbers[idx], numbers, target);
+        dfs(idx + 1, sum - numbers[idx], numbers, target);
     }
 }
