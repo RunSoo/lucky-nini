@@ -1,18 +1,20 @@
 class Solution {
-    static int cnt = 0;
+    public static int cnt = 0;
+    
     public int solution(int[] numbers, int target) {
-        dfs(0, 0, numbers, target);
+        boolean[] visited = new boolean[numbers.length];
+        makeNum(0, 0, visited, target, numbers);
         
         return cnt;
     }
     
-    public static void dfs(int idx, int sum, int[] numbers, int target) {
-        if (idx == numbers.length) {
+    public void makeNum(int sum, int idx, boolean[] visited, int target, int[] numbers) {
+        if (idx == visited.length) {
             if (sum == target) cnt++;
             return;
         }
-        
-        dfs(idx + 1, sum + numbers[idx], numbers, target);
-        dfs(idx + 1, sum - numbers[idx], numbers, target);
+        visited[idx] = true;
+        makeNum(sum + numbers[idx], idx+1, visited, target, numbers);
+        makeNum(sum - numbers[idx], idx+1, visited, target, numbers);
     }
 }
