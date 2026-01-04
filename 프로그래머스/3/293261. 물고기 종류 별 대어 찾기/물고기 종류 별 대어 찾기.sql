@@ -1,12 +1,12 @@
 -- 코드를 작성해주세요
-SELECT f.ID, n.FISH_NAME, f.LENGTH
-FROM (SELECT f.ID, f.FISH_TYPE, f.LENGTH
-    FROM FISH_INFO f
-    JOIN (SELECT FISH_TYPE, MAX(LENGTH) as MAX
-        FROM FISH_INFO
-        GROUP BY FISH_TYPE) j
-    ON f.FISH_TYPE = j.FISH_TYPE
-    WHERE f.LENGTH = j.MAX) f
-JOIN FISH_NAME_INFO n
-ON f.FISH_TYPE = n.FISH_TYPE
-ORDER BY f.ID;
+select b.id, a.fish_name, a.length
+from (select n.fish_type, n.fish_name, max(i.length) as length
+    from fish_info i
+    join fish_name_info n
+    on i.fish_type = n.fish_type
+    group by i.fish_type, n.fish_name
+     ) a
+join fish_info b
+on a.fish_type = b.fish_type
+where a.length = b.length
+order by b.id;
