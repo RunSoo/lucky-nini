@@ -1,5 +1,10 @@
-SELECT YEAR(o.DIFFERENTIATION_DATE) as YEAR, (t.MAX_COLONY - o.SIZE_OF_COLONY) AS YEAR_DEV, o.ID
-FROM ECOLI_DATA o
-INNER JOIN (SELECT MAX(SIZE_OF_COLONY) AS MAX_COLONY, YEAR(DIFFERENTIATION_DATE) AS YEAR FROM ECOLI_DATA GROUP BY YEAR(DIFFERENTIATION_DATE)) t
-ON YEAR(o.DIFFERENTIATION_DATE) = t.YEAR
-ORDER BY YEAR, YEAR_DEV;
+-- 코드를 작성해주세요
+select a.year, (a.max_size - b.size_of_colony) as year_dev, b.id
+from (
+    select year(differentiation_date) as year, max(size_of_colony) as max_size
+    from ecoli_data
+    group by year(differentiation_date)
+) as a
+join ecoli_data b
+on a.year = year(b.differentiation_date)
+order by a.year, year_dev 
